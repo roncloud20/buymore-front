@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MDBCard,
   MDBCardBody,
@@ -9,8 +9,28 @@ import {
   MDBRipple,
   MDBTypography
 } from 'mdb-react-ui-kit';
+import { useNavigate } from 'react-router-dom';
 
-export default function Card({productDescription, productImage, productName, initialPrice, sellingPrice, category}) {
+export default function Card({id, productDescription, productImage, productName, initialPrice, sellingPrice, category}) {
+  const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+      setCart(JSON.parse(cartData));
+    }
+  },[]);
+
+  const addToCart = () => {
+    const newItem = {id, productDescription, productImage, productName, initialPrice, sellingPrice, category};
+    const newCart = [...cart, newItem];
+    setCart(newCart);
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    console.log(newCart);
+    navigate("/cart");
+  }
+
   return (
     <MDBCard className='m-5' style={{maxWidth: '300px'}}>
       <MDBRipple rippleColor='light' rippleTag='div' className='bg-image hover-overlay'>
@@ -27,7 +47,7 @@ export default function Card({productDescription, productImage, productName, ini
         <MDBCardText>
           {productDescription}
         </MDBCardText>
-        <MDBBtn>Button</MDBBtn>
+        <MDBBtn onClick={addToCart}>Add To Cart</MDBBtn>
       </MDBCardBody>
     </MDBCard>
   );

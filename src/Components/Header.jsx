@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
@@ -7,6 +8,15 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
 
 function Header() {
+  const [cartItems, setCartItems] = useState([]);
+  let loginUser = JSON.parse(localStorage.getItem('userInfo'));
+  useEffect(() => {
+    let cartData = localStorage.getItem('cart');
+    if (cartData) {
+      setCartItems(JSON.parse(cartData));
+    }
+  },[]);
+
   return (
     // <Navbar expand="lg" className="bg-body-tertiary">
     <Navbar expand="lg" bg="dark" variant="dark">
@@ -21,11 +31,18 @@ function Header() {
           >
             {
               localStorage.getItem('userInfo') ?
-              <>
-                <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                <Nav.Link as={Link} to="/addproduct">Add Product</Nav.Link>
-                <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
-              </>
+              (loginUser['email'] === 'olugbengaraymond20@gmail.com') ?
+                <>
+                  <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                  <Nav.Link as={Link} to="/addproduct">Add Product</Nav.Link>
+                  <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+                </>
+              :
+                <>
+                  <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                  <Nav.Link as={Link} to="/dashboard">Cart <sup>{cartItems.length}</sup></Nav.Link>
+                  <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
+                </>
               :
               <>
                 <Nav.Link as={Link} to="/">Home</Nav.Link>
