@@ -8,6 +8,7 @@ import Dashboard from './Pages/Dashboard';
 import Logout from './Pages/Logout';
 import RouteProtection from './Components/RouteProtection';
 import AddProduct from './Pages/AddProduct';
+import Cart from './Pages/Cart';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/" element={<Home/>} />
           <Route path="/dashboard" element={<RouteProtection cmp={Dashboard}/>} />
           <Route path="/addproduct" element={<RouteProtection cmp={AddProduct}/>} />
+          <Route path='/cart' element={<RouteProtection cmp={Cart}/>} />
           <Route path="/register" element={<Register/>} />
           <Route path="/logout" element={<Logout/>} />
           <Route path="/login" element={<Login/>} />

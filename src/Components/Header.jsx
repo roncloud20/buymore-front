@@ -40,7 +40,7 @@ function Header() {
               :
                 <>
                   <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-                  <Nav.Link as={Link} to="/dashboard">Cart <sup>{cartItems.length}</sup></Nav.Link>
+                  <Nav.Link as={Link} to="/cart">Cart <sup>{cartItems.length}</sup></Nav.Link>
                   <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
                 </>
               :
