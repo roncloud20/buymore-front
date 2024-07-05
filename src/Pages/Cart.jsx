@@ -4,15 +4,29 @@ import { MDBBadge, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit
 
 export default function Cart() {
     const [cart, setCart] = useState([]);
-    const [cost, setCost] = useState("");
     useEffect(()=>{
         const cartData = localStorage.getItem('cart');
         if (cartData) {
             setCart(JSON.parse(cartData));
-            console.log(cartData);
-            console.log(cart);
         }
     }, []);
+
+    const handleQuantityChange = (id, quantity) => {
+        const updateCart = cart.map(item => {
+            if (item.id === id) {
+                return {...item, quantity: quantity};
+            }
+
+            return item;
+        });
+
+        setCart(updateCart);
+        localStorage.setItem('cart', JSON.stringify(updateCart));
+    }
+
+    const calculateItemCost = (quantity, price) => {
+        return quantity * price;
+    }
 
 
   return (
@@ -52,15 +66,21 @@ export default function Cart() {
                                 </td>
                                 <td>
                                     <p className='fw-normal mb-1'>{sam.productDescription}</p>
-                                    {/* <p className='text-muted mb-0'>IT department</p> */}
                                 </td>
                                 <td>
                                     <MDBBadge color='success' pill>
                                     {sam.sellingPrice}
                                     </MDBBadge>
                                 </td>
-                                <td><input type="number" min="1" onChange={(e)=>setCost(e.target.value)}/></td>
-                                <td>{cost * sam.sellingPrice || sam.sellingPrice}</td>
+                                <td>
+                                    <input 
+                                        type="number" 
+                                        min="1" 
+                                        onChange={(e)=> handleQuantityChange(sam.id, parseInt(e.target.value))} 
+                                        value={sam.quantity}
+                                    />
+                                </td>
+                                <td>{calculateItemCost(sam.quantity, sam.sellingPrice)}</td>
                                 {/* <td>
                                     <MDBBtn color='link' rounded size='sm'>
                                     Edit
@@ -77,16 +97,3 @@ export default function Cart() {
   )
 }
 
-
-
-{/* <div>
-    {
-        cart.map((alex, index) => (
-            <div>
-                <h1>{alex.id}</h1>
-                <h1>{alex.productName}</h1>
-                <h1>{alex.sellingPrice}</h1>
-            </div>
-        ))
-    }
-</div> */}

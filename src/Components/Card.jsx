@@ -23,7 +23,7 @@ export default function Card({id, productDescription, productImage, productName,
   },[]);
 
   const addToCart = () => {
-    const newItem = {id, productDescription, productImage, productName, initialPrice, sellingPrice, category};
+    const newItem = {id, productDescription, productImage, productName, initialPrice, sellingPrice, category, quantity: 1,};
     const newCart = [...cart, newItem];
     setCart(newCart);
     localStorage.setItem('cart', JSON.stringify(newCart));

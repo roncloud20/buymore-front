@@ -35,6 +35,7 @@ function Header() {
                 <>
                   <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
                   <Nav.Link as={Link} to="/addproduct">Add Product</Nav.Link>
+                  <Nav.Link as={Link} to="/cart">Cart <sup>{cartItems.length}</sup></Nav.Link>
                   <Nav.Link as={Link} to="/logout">Logout</Nav.Link>
                 </>
               :
