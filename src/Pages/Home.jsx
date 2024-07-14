@@ -36,7 +36,7 @@ export default function Home() {
     return (
         <>
             <Header onSearch={handleSearch}/>
-            <h1>Dashboard Page</h1>
+            <h1>Home Page</h1>
             <ProductList data={data}/>
         </>
     )
